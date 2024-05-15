@@ -30,6 +30,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 8;
 
     options.User.RequireUniqueEmail = true;
+
 });
 
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
