@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bookify.Web.Data
 {
@@ -38,7 +39,32 @@ namespace Bookify.Web.Data
             foreach (var fk in cascadeFKs)
                 fk.DeleteBehavior = DeleteBehavior.Restrict;
 
-            base.OnModelCreating(builder);
-        }
+            // Seed data for Governorate
+            builder.Entity<Governorate>().HasData(
+                new Governorate
+                {
+                    Id = 1,
+                    Name = "Example",
+                    CreatedById = "138db5fe-7a06-4c85-9a62-b1c6bd936b57",
+
+                }
+            ) ;
+            
+
+			// Seed data for Area
+			builder.Entity<Area>().HasData(
+				new Area
+				{
+                    Id = 1,
+					Name = "Example Area",
+					GovernorateId = 1,
+					CreatedById = "138db5fe-7a06-4c85-9a62-b1c6bd936b57",
+				}
+			);
+
+			base.OnModelCreating(builder);
+
+			
+		}
     }
 }

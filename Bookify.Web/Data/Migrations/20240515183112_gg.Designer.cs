@@ -4,6 +4,7 @@ using Bookify.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bookify.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240515183112_gg")]
+    partial class gg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,17 +163,6 @@ namespace Bookify.Web.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Areas");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedById = "138db5fe-7a06-4c85-9a62-b1c6bd936b57",
-                            CreatedOn = new DateTime(2024, 5, 16, 17, 31, 57, 464, DateTimeKind.Local).AddTicks(7014),
-                            GovernorateId = 1,
-                            IsDeleted = false,
-                            Name = "Example Area"
-                        });
                 });
 
             modelBuilder.Entity("Bookify.Web.Core.Models.Author", b =>
@@ -429,16 +420,6 @@ namespace Bookify.Web.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Governorates");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedById = "138db5fe-7a06-4c85-9a62-b1c6bd936b57",
-                            CreatedOn = new DateTime(2024, 5, 16, 17, 31, 57, 464, DateTimeKind.Local).AddTicks(6827),
-                            IsDeleted = false,
-                            Name = "Example"
-                        });
                 });
 
             modelBuilder.Entity("Bookify.Web.Core.Models.Subscriber", b =>

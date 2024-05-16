@@ -191,7 +191,10 @@ $(document).ready(function () {
         singleDatePicker: true,
         autoApply: true,
         drops: 'up',
-        maxDate: new Date()
+        maxDate: new Date(),
+        locale: {
+            format: 'DD/MM/YYYY hh:mm:ss a'
+        }
     });
 
     //SweetAlert

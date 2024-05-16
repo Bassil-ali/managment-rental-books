@@ -1,4 +1,6 @@
-﻿namespace Bookify.Web.Controllers
+﻿using Bookify.Web.Core.Models;
+
+namespace Bookify.Web.Controllers
 {
     [Authorize(Roles = AppRoles.Archive)]
     public class CategoriesController : Controller
@@ -18,6 +20,7 @@
             var categories = _context.Categories.AsNoTracking().ToList();
 
             var viewModel = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
+
 
             return View(viewModel);
         }
