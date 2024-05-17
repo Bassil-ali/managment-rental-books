@@ -96,7 +96,7 @@ namespace Bookify.Web.Controllers
                     protocol: Request.Scheme);
 
                 var body = _emailBodyBuilder.GetEmailBody(
-                        "https://res.cloudinary.com/devcreed/image/upload/v1668732314/icon-positive-vote-1_rdexez.svg",
+						"https://res.cloudinary.com/dfbsc3elx/image/upload/v1715943627/nvflpjo67npy0g69u34e.svg",
 						$"Hey {user.FullName}, thanks for joining us!",
 						"please confirm your email",
 						$"{HtmlEncoder.Default.Encode(callbackUrl!)}",
