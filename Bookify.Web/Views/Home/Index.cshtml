@@ -1,8 +1,75 @@
-﻿@{
+﻿@model IEnumerable<Bookify.Web.Core.Models.Book>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-5">
+    <h1 class="display-4">Welcome to Bookify</h1>
+    <p class="lead">Your premium book rental management system</p>
 </div>
+
+<h2 class="mb-4">Latest Books</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No books available yet.
+    </div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        @foreach (var book in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    @if (!string.IsNullOrEmpty(book.ImageUrl))
+                    {
+                        <img src="@book.ImageUrl" class="card-img-top" alt="@book.Title" style="height: 300px; object-fit: cover;">
+                    }
+                    else
+                    {
+                        <img src="~/images/no-image.png" class="card-img-top" alt="No image" style="height: 300px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/300x400?text=No+Image'">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">
+                            <small class="text-muted">by @book.Author?.Name</small>
+                            @if (book.Categories?.Any() == true)
+                            {
+                                <br>
+                                <small class="text-muted">
+                                    Categories:
+                                    @string.Join(", ", book.Categories.Select(c => c.Category?.Name).Where(n => n != null))
+                                </small>
+                            }
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="btn btn-primary btn-sm">View Details</a>
+                        @if (book.IsAvailableForRental)
+                        {
+                            <span class="badge bg-success float-end">Available</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger float-end">Not Available</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@section Styles {
+    <style>
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+}

@@ -25,15 +25,26 @@ namespace Bookify.Web.Services
 			if (image.Length > _maxAllowedSize)
 				return (isUploaded: false, errorMessage: Errors.MaxSize);
 
-			var path = Path.Combine($"{_webHostEnvironment.WebRootPath}{folderPath}", imageName);
+			// Ensure main directory exists
+			var fullFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, folderPath.TrimStart('/'));
+			if (!Directory.Exists(fullFolderPath))
+				Directory.CreateDirectory(fullFolderPath);
 
-			using var stream = File.Create(path);
-			await image.CopyToAsync(stream);
-			stream.Dispose();
+			var path = Path.Combine(fullFolderPath, imageName);
+
+			using (var stream = File.Create(path))
+			{
+				await image.CopyToAsync(stream);
+			}
 
 			if (hasThumbnail)
 			{
-				var thumbPath = Path.Combine($"{_webHostEnvironment.WebRootPath}{folderPath}/thumb", imageName);
+				// Ensure thumbnail directory exists
+				var thumbFolderPath = Path.Combine(fullFolderPath, "thumb");
+				if (!Directory.Exists(thumbFolderPath))
+					Directory.CreateDirectory(thumbFolderPath);
+
+				var thumbPath = Path.Combine(thumbFolderPath, imageName);
 
 				using var loadedImage = Image.Load(image.OpenReadStream());
 				var ratio = (float)loadedImage.Width / 200;
@@ -47,15 +58,14 @@ namespace Bookify.Web.Services
 
 		public void Delete(string imagePath, string? imageThumbnailPath = null)
 		{
-			var oldImagePath = $"{_webHostEnvironment.WebRootPath}{imagePath}";
+			var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, imagePath.TrimStart('/'));
 
 			if (File.Exists(oldImagePath))
 				File.Delete(oldImagePath);
 
 			if (!string.IsNullOrEmpty(imageThumbnailPath))
 			{
-				var oldThumbPath = $"{_webHostEnvironment.WebRootPath}{imageThumbnailPath}";
-
+				var oldThumbPath = Path.Combine(_webHostEnvironment.WebRootPath, imageThumbnailPath.TrimStart('/'));
 				if (File.Exists(oldThumbPath))
 					File.Delete(oldThumbPath);
 			}

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,15 +20,9 @@ namespace Bookify.Web.Data
         public DbSet<Governorate> Governorates { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.HasSequence<int>("SerialNumber", schema: "shared")
-                .StartsAt(1000001);
-
-            builder.Entity<BookCopy>()
-                .Property(e => e.SerialNumber)
-                .HasDefaultValueSql("NEXT VALUE FOR shared.SerialNumber");
+            base.OnModelCreating(builder);
 
             builder.Entity<BookCategory>().HasKey(e => new { e.BookId, e.CategoryId });
 
@@ -38,33 +32,6 @@ namespace Bookify.Web.Data
 
             foreach (var fk in cascadeFKs)
                 fk.DeleteBehavior = DeleteBehavior.Restrict;
-
-            // Seed data for Governorate
-            builder.Entity<Governorate>().HasData(
-                new Governorate
-                {
-                    Id = 1,
-                    Name = "Example",
-                    CreatedById = "138db5fe-7a06-4c85-9a62-b1c6bd936b57",
-
-                }
-            ) ;
-            
-
-			// Seed data for Area
-			builder.Entity<Area>().HasData(
-				new Area
-				{
-                    Id = 1,
-					Name = "Example Area",
-					GovernorateId = 1,
-					CreatedById = "138db5fe-7a06-4c85-9a62-b1c6bd936b57",
-				}
-			);
-
-			base.OnModelCreating(builder);
-
-			
-		}
+        }
     }
 }
