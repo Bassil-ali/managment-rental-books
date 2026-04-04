@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet ef:*)",
+      "Bash(systemctl status:*)",
+      "Bash(service mysql:*)",
+      "Bash(/c/xampp/mysql/bin/mysql.exe -u root -e \"SELECT 1\")",
+      "Bash(sc query:*)",
+      "Bash(/c/xampp/mysql/bin/mysqladmin.exe:*)",
+      "Bash(/c/xampp/mysql/bin/mysql.exe:*)",
+      "Bash(dir Data\\\\Migrations /a)",
+      "Bash(ls Migrations/*.cs)",
+      "Bash(dotnet run:*)",
+      "Bash(pkill -f \"Bookify.Web\")",
+      "Bash(taskkill //F //IM Bookify.Web.exe)",
+      "Bash(git add:*)",
+      "Bash(git reset:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
